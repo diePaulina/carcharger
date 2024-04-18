@@ -54,6 +54,7 @@ public class calculate {
 }
 
     public static void help(double currentCapacity, double rest, int x) {
+        i=0;
         fahrzeug f = list.get(i);
         if (f.startTime <= currentTime) {
             //System.out.println("succses");
@@ -109,7 +110,7 @@ public class calculate {
        // System.out.println("1");
         increaseI();
         if (x > 0 && rest > 0) {
-            System.out.println("No");
+            //System.out.println("No");
             help(currentCapacity, interval, --x, false);
         }
     }
