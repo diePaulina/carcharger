@@ -4,6 +4,7 @@ import java.util.Comparator;
 
 public class Main {
 
+
     public static void main(String[] args) {
 
         ArrayList<fahrzeug> list = new ArrayList<>();//List of vehicles
@@ -44,4 +45,6 @@ public class Main {
 
         calculate.startCharging(interval, list, capacityList);
     }
+
+
 }

@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class calculate {
+    public static ArrayList<String[]> output = new ArrayList<>();
+
     public static double currentTime;
     public static double interval;
     public static double currentCapacity;
@@ -40,7 +42,7 @@ public class calculate {
         for (int j = 0; j < list.size(); j++) {
             fahrzeug v = list.get(j);
             if (v.endTime <= currentTime) {
-                v.printFail(currentTime);
+                v.printFail(currentTime, currentCapacity);
                 if (isIllegal()) {break;}
             }
         }
@@ -133,5 +135,22 @@ public class calculate {
     public static void increaseI() {
         if (i == list.size() - 1) i = 0;
         else i++;
+    }
+
+    /**
+     * @param f fahrzeug
+     * @param t current time
+     * @param c current capacity
+     * @param ic incoming charge
+     * @param status loading/success/fail
+     */
+    public static void writeNames(){
+        output.add(new String[]{"Zeit","Ladeleistung in kW","Fahrzeug ID", "Fahrzeug Typ", "current charge in kWh", "charge remaining in kWh", "Status"});
+    }
+    public static void addEntry(fahrzeug f, String t, double c, double ic, String status){
+        output.add(new String[]{t,Double.toString(fahrzeug.round(c)),Integer.toString(f.id),f.type,Double.toString(fahrzeug.round(ic)),Double.toString(fahrzeug.round(f.chargeRemaining)),status});
+    }
+    public static ArrayList<String[]> returnList (){
+        return output;
     }
 }
