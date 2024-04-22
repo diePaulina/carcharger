@@ -1,24 +1,35 @@
 import java.io.*;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Objects;
 
 public class excel {
+    static ArrayList<type> typeList = new ArrayList<>();
     public static void main(String[] args) throws IOException {
 
         ArrayList<String[]> list = readExcel();
         ArrayList<fahrzeug> vehicles = new ArrayList<>();//List of vehicles
         ArrayList<Double> capacityList = new ArrayList<Double>();
+
         calculate.writeNames();
 
         /*set parameters for our function call*/
         double interval = 0.25;
         for (int i = 1; i < list.size(); i++) {
             String[] row = list.get(i);
+        if(row.length >11 ){
+            typeList.add(new type(row[10],convertToDouble(row[11])));
+            System.out.println("add verbrauch of "+ row[10]+ ": " + row[11]);
+        }}
+        System.out.println();
+        for (int i = 1; i < list.size(); i++) {
+            String[] row = list.get(i);
             if( row.length >3) {
                 vehicles.add(new fahrzeug(i, convertToDouble(row[4]), convertToDouble(row[5]), row[3], convertToDouble(row[6]), convertToDouble(row[7])));
             }
+
             if(row.length>1&& !Objects.equals(row[1], "")){
                 capacityList.add(convertToDouble(row[1]));
             }else break;
@@ -107,5 +118,15 @@ public class excel {
     }
     private static boolean isNumeric(String str) {
         return str.matches("-?\\d+(\\.\\d+)?");  // Regex to check if the string is a number
+    }
+
+    public static double getVerbrauch(String type){
+        for (int i = 0; i < typeList.size(); i++) {
+            if (typeList.get(i).name.equals(type)) {
+                return typeList.get(i).verbrauch;
+            }
+        }
+        return 0;
+
     }
 }

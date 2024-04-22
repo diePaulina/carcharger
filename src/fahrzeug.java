@@ -29,17 +29,8 @@ public class fahrzeug {
         this.type = type;
         this.rangeCurrent = rangeCurrent;
         this.rangeNeeded = rangeNeeded;
-        switch (type) {
-            case "Kleinbus" -> {
-                verbrauch = 26.1;
-                this.type+="   ";
-            }
-            case "Transporter" -> verbrauch = 29.7;
-            case "Auto" -> {
-                verbrauch = 20.0;
-                this.type+="       ";
-            }
-        }
+        this.verbrauch = excel.getVerbrauch(type);
+        if(verbrauch == 0) System.out.println("There has been an error in getting the consumption");
         this.chargeRemaining = ((rangeNeeded - rangeCurrent) * verbrauch) / 100.0;
         System.out.println("new " + type + " "+ id+ " from " + cT(startTime) + " to " + cT(endTime) + " with needed Charge " + numberFormat.format(chargeRemaining) + "kWh");
 
