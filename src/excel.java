@@ -18,16 +18,16 @@ public class excel {
 
         /*set parameters for our function call*/
         double interval = 0.25;
+        start= convertToDouble(list.get(1)[16]);
+        end= convertToDouble(list.get(1)[17] ) + 24;
+          System.out.println("Start zeit: " + fahrzeug.cT(start)+ " , End zeit: " + fahrzeug.cT(end));
         for (int i = 1; i < list.size(); i++) {
             String[] row = list.get(i);
-        if(row.length >11 ){
+            if(row.length > 10){
+        if(isNumeric(row[11]) && !isNumeric(row[10])){
             typeList.add(new type(row[10],convertToDouble(row[11])));
             System.out.println("add verbrauch of "+ row[10]+ ": " + row[11]);
-        } if(row.length >16 ){
-          start= convertToDouble(row[16]);
-          end= convertToDouble(row[17] ) + 24;
-            System.out.println("Start zeit: " + fahrzeug.cT(start)+ " , End zeit: " + fahrzeug.cT(end));
-        }
+        }}
     }
         System.out.println();
         for (int i = 1; i < list.size(); i++) {
