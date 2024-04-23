@@ -30,3 +30,6 @@ bin/
 
 ### Intellij ###
 /.idea
+
+### Zip ###
+.zip
