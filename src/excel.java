@@ -12,7 +12,8 @@ public class excel {
         ArrayList<String[]> list = readExcel();
         ArrayList<fahrzeug> vehicles = new ArrayList<>();//List of vehicles
         ArrayList<Double> capacityList = new ArrayList<Double>();
-
+        double start = 0;
+        double end = 0;
         calculate.writeNames();
 
         /*set parameters for our function call*/
@@ -22,7 +23,12 @@ public class excel {
         if(row.length >11 ){
             typeList.add(new type(row[10],convertToDouble(row[11])));
             System.out.println("add verbrauch of "+ row[10]+ ": " + row[11]);
-        }}
+        } if(row.length >16 ){
+          start= convertToDouble(row[16]);
+          end= convertToDouble(row[17] ) + 24;
+            System.out.println("Start zeit: " + fahrzeug.cT(start)+ " , End zeit: " + fahrzeug.cT(end));
+        }
+    }
         System.out.println();
         for (int i = 1; i < list.size(); i++) {
             String[] row = list.get(i);
@@ -42,7 +48,7 @@ public class excel {
         System.out.println();
         Comparator<fahrzeug> customComparator = (CustomComparator.compareStart());
         vehicles.sort(customComparator);
-        calculate.startCharging(interval, vehicles, capacityList);
+        calculate.startCharging(interval, vehicles, capacityList, start, end);
         ArrayList<String[]> output = calculate.returnList();
         for (String[] a:output
              ) {

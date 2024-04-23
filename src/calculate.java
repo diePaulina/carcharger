@@ -17,26 +17,35 @@ public class calculate {
      * @param fahrzeugList list of vehicles that need charging, with start time asc
      * @param capacityList list of capacities starting at 00:00 each entry is spaced by one interval
      */
-    public static void startCharging(double intervalValue, ArrayList<fahrzeug> fahrzeugList, ArrayList<Double> capacityList) {
+    public static void startCharging(double intervalValue, ArrayList<fahrzeug> fahrzeugList, ArrayList<Double> capacityList, double start, double end) {
         list = fahrzeugList;
         capacity = capacityList;
         interval = intervalValue;
-        currentTime = list.get(0).startTime;
+        currentTime = start;
 
         Comparator<fahrzeug> customComparator = (CustomComparator.compareEnd());
         list.sort(customComparator);
-        double endTime = list.get(list.size() - 1).endTime;
+       // double endTime = list.get(list.size() - 1).endTime;
         System.out.println();
-        System.out.println("     Starting calculation with " + list.size() + " vehicles, variable charging capacity and interval " + fahrzeug.cT(interval));
+        System.out.println("     Starting calculation at " + fahrzeug.cT(currentTime)+ " with " + list.size() + " vehicles, variable charging capacity and interval " + fahrzeug.cT(interval));
         System.out.println();
         /* 1 End Zeit schauen, und die richtigen rauslöschen
             2 Startzeit schauen und anfangen zu calculaten
             edge case: was wenn end zeit + intervall schon zu spät wäre?
          */
-
-        while (list.size() > 0 && currentTime <= endTime) {
-            currentCapacity = capacity.get((int) ((currentTime % 24) / interval));
+        currentCapacity = capacity.get((int) ((currentTime % 24)*4));
+        System.out.println((int) ((currentTime % 24)*4));
+        addEntry(new String[]{fahrzeug.cT(start), String.valueOf(currentCapacity),"","","","","NONE"});
+        while (list.size() > 0 && currentTime <= end) {
+            currentCapacity = capacity.get((int) (((currentTime+interval) % 24)*4));
+            System.out.println((int) (((currentTime+interval)  % 24)*4));
             helpCharge();
+            currentTime += interval;
+           // System.out.println("increase to " + currentTime);
+        }while (list.size()  == 0 &&currentTime + interval <= end) {
+            currentCapacity = capacity.get((int) (((currentTime+interval)  % 24)*4));
+            System.out.println((int) (((currentTime+interval)  % 24)*4));
+            addEntry(new String[]{fahrzeug.cT(currentTime+interval), String.valueOf(currentCapacity),"","","","","NONE"});
             currentTime += interval;
            // System.out.println("increase to " + currentTime);
         }
@@ -99,6 +108,8 @@ public class calculate {
         if (x > 0 && rest > 0) {
            // System.out.println("No");
             help(currentCapacity, interval, --x, false);
+        } else if (x == 0){
+                addEntry(new String[]{fahrzeug.cT(currentTime +  interval +interval ), String.valueOf(currentCapacity),"","","","","NONE"});
         }
     }
 
@@ -136,6 +147,8 @@ public class calculate {
         if (x > 0 && rest > 0) {
             //System.out.println("No");
             help(currentCapacity, interval, --x, false);
+        }else if (x == 0){
+            addEntry(new String[]{fahrzeug.cT(currentTime+ interval + interval  - rest), String.valueOf(currentCapacity),"","","","","NONE"});
         }
     }
 
@@ -174,6 +187,7 @@ public class calculate {
     }
     public static void addEntry(String[] arr){
         //add method that writes entries of the right side of the output
+        output.add(arr);
     }
     /**
      * @param f fahrzeug
