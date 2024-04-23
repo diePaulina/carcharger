@@ -11,7 +11,7 @@ public class excel {
 
         ArrayList<String[]> list = readExcel();
         ArrayList<fahrzeug> vehicles = new ArrayList<>();//List of vehicles
-        ArrayList<Double> capacityList = new ArrayList<Double>();
+        ArrayList<Double> capacityList = new ArrayList<>();
 
         calculate.writeNames();
 
