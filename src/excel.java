@@ -24,10 +24,10 @@ public class excel {
         for (int i = 1; i < list.size(); i++) {
             String[] row = list.get(i);
             if(row.length > 10){
-        if(isNumeric(row[11]) && !isNumeric(row[10])){
+    
             typeList.add(new type(row[10],convertToDouble(row[11])));
             System.out.println("add verbrauch of "+ row[10]+ ": " + row[11]);
-        }}
+        }
     }
         System.out.println();
         for (int i = 1; i < list.size(); i++) {

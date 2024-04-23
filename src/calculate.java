@@ -38,13 +38,13 @@ public class calculate {
         addEntry(new String[]{fahrzeug.cT(start), String.valueOf(currentCapacity),"","","","","NONE"});
         while (list.size() > 0 && currentTime <= end) {
             currentCapacity = capacity.get((int) (((currentTime+interval) % 24)*4));
-            System.out.println((int) (((currentTime+interval)  % 24)*4));
+           // System.out.println((int) (((currentTime+interval)  % 24)*4));
             helpCharge();
             currentTime += interval;
            // System.out.println("increase to " + currentTime);
         }while (list.size()  == 0 &&currentTime + interval <= end) {
             currentCapacity = capacity.get((int) (((currentTime+interval)  % 24)*4));
-            System.out.println((int) (((currentTime+interval)  % 24)*4));
+           // System.out.println((int) (((currentTime+interval)  % 24)*4));
             addEntry(new String[]{fahrzeug.cT(currentTime+interval), String.valueOf(currentCapacity),"","","","","NONE"});
             currentTime += interval;
            // System.out.println("increase to " + currentTime);
@@ -149,6 +149,7 @@ public class calculate {
             help(currentCapacity, interval, --x, false);
         }else if (x == 0){
             addEntry(new String[]{fahrzeug.cT(currentTime+ interval + interval  - rest), String.valueOf(currentCapacity),"","","","","NONE"});
+         
         }
     }
 
