@@ -56,6 +56,11 @@ public class excel {
 
     }
 
+    /**
+     * reads a csv Excel file
+     * @return arrayList of String[] representing the columns and rows
+     * @throws IOException
+     */
     public static ArrayList<String[]> readExcel() throws IOException {
         String file = "src/fahrzeuge.csv";
         BufferedReader reader = null;
@@ -80,6 +85,11 @@ public class excel {
         return output;
     }
 
+    /**
+     * Converts a string to double if possible
+     * @param str String
+     * @return double value, -1 if not possible
+     */
     public static double convertToDouble(String str) {
         // Replace the comma with a dot to form a valid double string
         String doubleStr = str.replace(",", ".");
@@ -92,9 +102,15 @@ public class excel {
             // Handle parsing errors
             System.err.println("Error parsing string to double: " + str);
             e.printStackTrace();
-            return 0.0; // Or any default value you prefer
+            return -1.0; // Or any default value you prefer
         }
     }
+
+    /**
+     * writes to a csv file (each entry is seperated by ';' )
+     * @param data ArrayList of String[] representing the columns and rows in Excel
+     * @param filePath path to save the file to
+     */
     public static void writeArrayListToCSV(ArrayList<String[]> data, String filePath) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             for (String[] row : data) {
@@ -116,17 +132,44 @@ public class excel {
             System.err.println("Error writing CSV file: " + e.getMessage());
         }
     }
+
+    /**
+     * checks if string is numeric
+     * @param str string
+     * @return true if number
+     */
     private static boolean isNumeric(String str) {
         return str.matches("-?\\d+(\\.\\d+)?");  // Regex to check if the string is a number
     }
 
+    /**
+     * gets the verbrauch of a certain vehicle type
+     * @param type type to get verbrauch of
+     * @return verbrauch
+     */
     public static double getVerbrauch(String type){
-        for (int i = 0; i < typeList.size(); i++) {
-            if (typeList.get(i).name.equals(type)) {
-                return typeList.get(i).verbrauch;
+        for (type value : typeList) {
+            if (compareString(value.name,type)) {
+                return value.verbrauch;
             }
         }
         return 0;
 
     }
+
+    /**
+     * compares 2 strings, ignoring capitalisation and blank spaces
+     * @param str1 string 1
+     * @param str2 string 2
+     * @return true if the same
+     */
+    public static boolean compareString(String str1, String str2) {
+        // Remove all blank spaces and convert both strings to lowercase for comparison
+        String trimmedStr1 = str1.replaceAll("\\s", "").toLowerCase();
+        String trimmedStr2 = str2.replaceAll("\\s", "").toLowerCase();
+
+        // Compare the trimmed and lowercase strings
+        return trimmedStr1.equals(trimmedStr2);
+    }
+
 }

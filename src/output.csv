@@ -1,4 +1,7 @@
 Zeit;Ladeleistung in kW;Fahrzeug ID;Fahrzeug Typ;current charge in kWh;charge remaining in kWh;Status
+14:15:00;18,39;9;Test ;4,59;5,4;charging
+14:30:00;18,0;9;Test ;4,5;0,9;charging
+14:45:00;17,6;9;Test ;0,9;0,0;CHARGED
 15:45:00;18,1;3;Kleinbus;4,51;43,23;charging
 16:00:00;18,39;3;Kleinbus;4,59;38,63;charging
 16:15:00;18,7;3;Kleinbus;4,67;33,96;charging

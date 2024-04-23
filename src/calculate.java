@@ -11,6 +11,12 @@ public class calculate {
     public static ArrayList<Double> capacity;
     public static int i = 0;
 
+    /**
+     * function to start the charging calculations
+     * @param intervalValue how long the intervals are
+     * @param fahrzeugList list of vehicles that need charging, with start time asc
+     * @param capacityList list of capacities starting at 00:00 each entry is spaced by one interval
+     */
     public static void startCharging(double intervalValue, ArrayList<fahrzeug> fahrzeugList, ArrayList<Double> capacityList) {
         list = fahrzeugList;
         capacity = capacityList;
@@ -37,6 +43,9 @@ public class calculate {
 
     }
 
+    /**
+     *helper function that deletes if the end time is reached, calls charging of vehicle at the current time
+     */
     public static void helpCharge() {
         //1 End Zeit schauen, und die richtigen rauslöschen
         for (int j = 0; j < list.size(); j++) {
@@ -55,6 +64,12 @@ public class calculate {
         System.out.print("\nDone Calculating\n");
 }
 
+    /**
+     * sees if a vehicle has already arrived in time and charges it, as long as it is not full
+     * @param currentCapacity current charging capacity at the time
+     * @param rest rest of time it is allowed to charge for(here one interval usually)
+     * @param x x to see if we iterated through all vehicles
+     */
     public static void help(double currentCapacity, double rest, int x) {
         i=0;
         fahrzeug f = list.get(i);
@@ -87,6 +102,13 @@ public class calculate {
         }
     }
 
+    /**
+     * different variant of charging function, if the previous vehicle didn't charge for the whole time
+     * @param currentCapacity current charging capacity at the time
+     * @param rest rest of the time, here it is less than 1 intervall
+     * @param x to see if we iterated through all vehicles
+     * @param calledAgain will usually be true, to make sure this function is called instead of the other one
+     */
     public static void help(double currentCapacity, double rest, int x, boolean calledAgain) {
         fahrzeug f = list.get(i);
         if (f.startTime <= currentTime) {
@@ -117,6 +139,10 @@ public class calculate {
         }
     }
 
+    /**
+     *checks if a deletion is allowed to be done and deletes object
+     * @return true if deleted
+     */
     public static boolean isIllegal() {
 
         if (i == 0 && list.size() == 1) {
@@ -132,11 +158,23 @@ public class calculate {
         return false;
     }
 
+    /**
+     *increases currently iterated object, goes to 0 if max is reached
+     */
     public static void increaseI() {
         if (i == list.size() - 1) i = 0;
         else i++;
     }
 
+    /**
+     * writes the Titles of the columns
+     */
+    public static void writeNames(){
+        output.add(new String[]{"Zeit","Ladeleistung in kW","Fahrzeug ID", "Fahrzeug Typ", "current charge in kWh", "charge remaining in kWh", "Status"});
+    }
+    public static void addEntry(String[] arr){
+        //add method that writes entries of the right side of the output
+    }
     /**
      * @param f fahrzeug
      * @param t current time
@@ -144,12 +182,14 @@ public class calculate {
      * @param ic incoming charge
      * @param status loading/success/fail
      */
-    public static void writeNames(){
-        output.add(new String[]{"Zeit","Ladeleistung in kW","Fahrzeug ID", "Fahrzeug Typ", "current charge in kWh", "charge remaining in kWh", "Status"});
-    }
     public static void addEntry(fahrzeug f, String t, double c, double ic, String status){
         output.add(new String[]{t,Double.toString(fahrzeug.round(c)),Integer.toString(f.id),f.type,Double.toString(fahrzeug.round(ic)),Double.toString(fahrzeug.round(f.chargeRemaining)),status});
     }
+
+    /**
+     * returns the array list that contains the info for Excel
+     * @return arrayList of String[] columns+rows
+     */
     public static ArrayList<String[]> returnList (){
         return output;
     }
