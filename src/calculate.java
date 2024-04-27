@@ -35,17 +35,17 @@ public class calculate {
          */
         currentCapacity = capacity.get((int) ((currentTime % 24)*4));
         System.out.println((int) ((currentTime % 24)*4));
-        addEntry(new String[]{fahrzeug.cT(start), String.valueOf(currentCapacity),"","","","","NONE"});
+        addEntry(new String[]{fahrzeug.cT(start), fahrzeug.cT(start), String.valueOf(currentCapacity),"","","","","NONE"});
         while (!list.isEmpty() && currentTime <= end) {
-            currentCapacity = capacity.get((int) (((currentTime+interval) % 24)*4));
+            currentCapacity = capacity.get((int) (((currentTime) % 24)*4));
            // System.out.println((int) (((currentTime+interval)  % 24)*4));
             helpCharge();
             currentTime += interval;
            // System.out.println("increase to " + currentTime);
         }while (list.isEmpty() &&currentTime + interval <= end) {
-            currentCapacity = capacity.get((int) (((currentTime+interval)  % 24)*4));
+            currentCapacity = capacity.get((int) (((currentTime)  % 24)*4));
            // System.out.println((int) (((currentTime+interval)  % 24)*4));
-            addEntry(new String[]{fahrzeug.cT(currentTime+interval), String.valueOf(currentCapacity),"","","","","NONE"});
+            addEntry(new String[]{fahrzeug.cT(currentTime),fahrzeug.cT(currentTime+interval), String.valueOf(currentCapacity),"","","","","NONE"});
             currentTime += interval;
            // System.out.println("increase to " + currentTime);
         }
@@ -110,7 +110,7 @@ public class calculate {
            // System.out.println("No");
             help(currentCapacity, interval, --x, false);
         } else if (x == 0){
-                addEntry(new String[]{fahrzeug.cT(currentTime +  interval +interval ), String.valueOf(currentCapacity),"","","","","NONE"});
+                addEntry(new String[]{fahrzeug.cT(currentTime  +interval ),fahrzeug.cT(currentTime +  interval +interval ), String.valueOf(currentCapacity),"","","","","NONE"});
         }
     }
 
@@ -149,7 +149,7 @@ public class calculate {
             //System.out.println("No");
             help(currentCapacity, interval, --x, false);
         }else if (x == 0){
-            addEntry(new String[]{fahrzeug.cT(currentTime+ interval + interval  - rest), String.valueOf(currentCapacity),"","","","","NONE"});
+            addEntry(new String[]{fahrzeug.cT(currentTime + interval),fahrzeug.cT(currentTime+ interval + interval  - rest), String.valueOf(currentCapacity),"","","","","NONE"});
          
         }
     }
@@ -185,7 +185,7 @@ public class calculate {
      * writes the Titles of the columns
      */
     public static void writeNames(){
-        output.add(new String[]{"Zeit","Ladeleistung in kW","Fahrzeug ID", "Fahrzeug Typ", "current charge in kWh", "charge remaining in kWh", "Status"});
+        output.add(new String[]{"Startzeit", "Endzeit","Ladeleistung in kW","Fahrzeug ID", "Fahrzeug Typ", "current charge in kWh", "charge remaining in kWh", "Status"});
     }
     public static void addEntry(String[] arr){
         //add method that writes entries of the right side of the output
@@ -193,13 +193,14 @@ public class calculate {
     }
     /**
      * @param f fahrzeug
-     * @param t current time
+     * @param t1 start time
+     * @param t2 end time/ current time
      * @param c current capacity
      * @param ic incoming charge
      * @param status loading/success/fail
      */
-    public static void addEntry(fahrzeug f, String t, double c, double ic, String status){
-        output.add(new String[]{t,Double.toString(fahrzeug.round(c)),Integer.toString(f.id),f.type,Double.toString(fahrzeug.round(ic)),Double.toString(fahrzeug.round(f.chargeRemaining)),status});
+    public static void addEntry(fahrzeug f, String t1,String t2, double c, double ic, String status){
+        output.add(new String[]{t1,t2,Double.toString(fahrzeug.round(c)),Integer.toString(f.id),f.type,Double.toString(fahrzeug.round(ic)),Double.toString(fahrzeug.round(f.chargeRemaining)),status});
     }
 
     /**

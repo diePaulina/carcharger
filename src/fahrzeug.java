@@ -48,14 +48,14 @@ public class fahrzeug {
         if (chargeRemaining - charge*time > 0) {
             incomingCharge =charge*time;
             chargeRemaining -= incomingCharge;
-            calculate.addEntry(this,cT(endTime),round(charge),round(incomingCharge),"charging");
+            calculate.addEntry(this,cT(startTime),cT(endTime),round(charge),round(incomingCharge),"charging");
             System.out.println("      " +this.type + " " + this.id + " at " + cT(startTime) + " to "+cT(endTime) + " charging with current charge "+ numberFormat.format(incomingCharge)+" kWh, Charge remaining " + numberFormat.format(this.chargeRemaining) + " kWh " + " current capacity " +charge +" kW "+ "     ");
             return -1.0;
         } else {
             double temp = chargeRemaining/ (charge*time);
             incomingCharge = charge *(temp * time);
             chargeRemaining = 0;
-            calculate.addEntry(this,cT(endTime),round(charge),round(incomingCharge),"CHARGED");
+            calculate.addEntry(this, cT(startTime),cT(startTime+ (temp *time)),round(charge),round(incomingCharge),"CHARGED");
             System.out.println("----- " + this.type + " " + this.id + " at "+ cT(startTime)  + " to "+cT(startTime+ (temp *time)) + " CHARGED, with current charge "+ numberFormat.format(incomingCharge)+ " kWh, Charge remaining "  + numberFormat.format(this.chargeRemaining)+" kWh "+ " current capacity " +charge +" kW " +"-----" );
             return temp* time ;
         }
@@ -65,7 +65,7 @@ public class fahrzeug {
         System.out.println("----- " +this.type + " " + this.id + " at " + cT(time) + " FAILED with charge remaining: " + numberFormat.format(this.chargeRemaining) + " kWh " +"                                                               " + "-----"     );
     }
     public void printFail(double time, double charge){
-        calculate.addEntry(this, cT(endTime),round(charge),0,"FAIL");
+        calculate.addEntry(this,cT(time), cT(time),round(charge),0,"FAIL");
         System.out.println("----- " +this.type + " " + this.id + " at " + cT(time) + " FAILED with charge remaining: " + numberFormat.format(this.chargeRemaining) + " kWh " +"                                                               " + "-----"     );
     }
 
