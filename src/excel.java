@@ -1,7 +1,5 @@
 import java.io.*;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Objects;
 
@@ -12,17 +10,24 @@ public class excel {
         ArrayList<String[]> list = readExcel();
         ArrayList<fahrzeug> vehicles = new ArrayList<>();//List of vehicles
         ArrayList<Double> capacityList = new ArrayList<>();
+        double start , end;
+
 
         calculate.writeNames();
 
         /*set parameters for our function call*/
         double interval = 0.25;
+        start= convertToDouble(list.get(1)[16]);
+        end= convertToDouble(list.get(1)[17] ) + 24;
+          System.out.println("Start zeit: " + fahrzeug.cT(start)+ " , End zeit: " + fahrzeug.cT(end));
         for (int i = 1; i < list.size(); i++) {
             String[] row = list.get(i);
-        if(row.length >11 ){
+            if(row.length > 10){
+    
             typeList.add(new type(row[10],convertToDouble(row[11])));
             System.out.println("add verbrauch of "+ row[10]+ ": " + row[11]);
-        }}
+        }
+    }
         System.out.println();
         for (int i = 1; i < list.size(); i++) {
             String[] row = list.get(i);
@@ -42,7 +47,7 @@ public class excel {
         System.out.println();
         Comparator<fahrzeug> customComparator = (CustomComparator.compareStart());
         vehicles.sort(customComparator);
-        calculate.startCharging(interval, vehicles, capacityList);
+        calculate.startCharging(interval, vehicles, capacityList, start, end);
         ArrayList<String[]> output = calculate.returnList();
         for (String[] a:output
              ) {
@@ -59,27 +64,28 @@ public class excel {
     /**
      * reads a csv Excel file
      * @return arrayList of String[] representing the columns and rows
-     * @throws IOException
+     * @throws IOException exception
      */
     public static ArrayList<String[]> readExcel() throws IOException {
         String file = "src/fahrzeuge.csv";
         BufferedReader reader = null;
-        String line = "";
+        String line;
         ArrayList<String[]> output = new ArrayList<>();
-        String[] row = new String[0];
+        String[] row;
         try {
             reader = new BufferedReader(new FileReader(file));
             while ((line = reader.readLine()) != null) {
                 row = line.split(";");
-                for (String s : row) {
+                /*for (String s : row) {
                     //System.out.printf("%16s", s);
-                }
+                }*/
                 //System.out.println();
                 output.add(row);
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            assert reader != null;
             reader.close();
         }
         return output;
@@ -96,8 +102,7 @@ public class excel {
 
         try {
             // Parse the string to double
-            double result = Double.parseDouble(doubleStr);
-            return result;
+            return Double.parseDouble(doubleStr);
         } catch (NumberFormatException e) {
             // Handle parsing errors
             System.err.println("Error parsing string to double: " + str);

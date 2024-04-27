@@ -1,5 +1,4 @@
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 
 public class fahrzeug {
     int id;
@@ -11,7 +10,7 @@ public class fahrzeug {
     double verbrauch; //kWh
     double chargeRemaining;
     DecimalFormat numberFormat = new DecimalFormat("00,00");
-    int priority;
+
 
     /**
      * @param id id of vehicle
@@ -31,29 +30,6 @@ public class fahrzeug {
         this.rangeNeeded = rangeNeeded;
         this.verbrauch = excel.getVerbrauch(type);
         if(verbrauch == 0) System.out.println("There has been an error in getting the consumption");
-        this.chargeRemaining = ((rangeNeeded - rangeCurrent) * verbrauch) / 100.0;
-        System.out.println("new " + type + " "+ id+ " from " + cT(startTime) + " to " + cT(endTime) + " with needed Charge " + numberFormat.format(chargeRemaining) + "kWh");
-
-    }
-    public fahrzeug(int id, double startTime, double endTime, String type, double rangeCurrent, double rangeNeeded, double verbrauch) {
-        this.verbrauch = verbrauch;
-        this.id = id;
-        this.startTime = startTime;
-        this.endTime = endTime + 24.0;
-        this.type = type;
-        this.rangeCurrent = rangeCurrent;
-        this.rangeNeeded = rangeNeeded;
-        switch (type) {
-            case "Kleinbus" -> {
-                verbrauch = 26.1;
-                this.type+="   ";
-            }
-            case "Transporter" -> verbrauch = 29.7;
-            case "Auto" -> {
-                verbrauch = 20.0;
-                this.type+="       ";
-            }
-        }
         this.chargeRemaining = ((rangeNeeded - rangeCurrent) * verbrauch) / 100.0;
         System.out.println("new " + type + " "+ id+ " from " + cT(startTime) + " to " + cT(endTime) + " with needed Charge " + numberFormat.format(chargeRemaining) + "kWh");
 
@@ -155,14 +131,6 @@ public class fahrzeug {
 
             return temp ;
         }
-    }
-
-    void setPriority(int p) {
-        priority = p;
-    }
-
-    void decreasePriority() {
-        priority = -1;
     }
 
 }

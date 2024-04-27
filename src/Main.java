@@ -43,7 +43,7 @@ public class Main {
         } else System.out.println("List has correct size");
         System.out.println();
 
-        calculate.startCharging(interval, list, capacityList);
+        //calculate.startCharging(interval, list, capacityList);
     }
 
 
