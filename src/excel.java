@@ -57,7 +57,7 @@ public class excel {
             }
             System.out.println();
         }
-        writeArrayListToCSV(output, "carcharger/src/output.csv");
+        writeArrayListToCSV(output, "src/output.csv");
 
     }
 
@@ -67,7 +67,7 @@ public class excel {
      * @throws IOException exception
      */
     public static ArrayList<String[]> readExcel() throws IOException {
-        String file = "carcharger/src/fahrzeuge.csv";
+        String file = "src/fahrzeuge.csv";
         BufferedReader reader = null;
         String line;
         ArrayList<String[]> output = new ArrayList<>();
