@@ -7,7 +7,7 @@ public class excel {
     static ArrayList<type> typeList = new ArrayList<>();
     public static void main(String[] args) throws IOException {
 
-        ArrayList<String[]> list = readExcel();
+        ArrayList<String[]> list = readExcelComma();
         ArrayList<fahrzeug> vehicles = new ArrayList<>();//List of vehicles
         ArrayList<Double> capacityList = new ArrayList<>();
         double start , end;
@@ -57,7 +57,7 @@ public class excel {
             }
             System.out.println();
         }
-        writeArrayListToCSV(output, "carcharger/src/output.csv");
+        writeArrayListToCSV(output, "src/output.csv");
 
     }
 
@@ -67,7 +67,7 @@ public class excel {
      * @throws IOException exception
      */
     public static ArrayList<String[]> readExcel() throws IOException {
-        String file = "carcharger/src/fahrzeuge.csv";
+        String file = "src/fahrzeuge.csv";
         BufferedReader reader = null;
         String line;
         ArrayList<String[]> output = new ArrayList<>();
@@ -91,6 +91,35 @@ public class excel {
         return output;
     }
 
+    /**
+     * reads a csv Excel file
+     * @return arrayList of String[] representing the columns and rows
+     * @throws IOException exception
+     */
+    public static ArrayList<String[]> readExcelComma() throws IOException {
+        String file = "src/fahrzeuge.csv";
+        BufferedReader reader = null;
+        String line;
+        ArrayList<String[]> output = new ArrayList<>();
+        String[] row;
+        try {
+            reader = new BufferedReader(new FileReader(file));
+            while ((line = reader.readLine()) != null) {
+                row = line.split(",");
+                /*for (String s : row) {
+                    //System.out.printf("%16s", s);
+                }*/
+                //System.out.println();
+                output.add(row);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            assert reader != null;
+            reader.close();
+        }
+        return output;
+    }
     /**
      * Converts a string to double if possible
      * @param str String

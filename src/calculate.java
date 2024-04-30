@@ -149,7 +149,7 @@ public class calculate {
             //System.out.println("No");
             help(currentCapacity, interval, --x, false);
         }else if (x == 0){
-            addEntry(new String[]{fahrzeug.cT(currentTime + interval),fahrzeug.cT(currentTime+ interval + interval  - rest), String.valueOf(currentCapacity),"","","","","NONE"});
+            addEntry(new String[]{fahrzeug.cT(currentTime + interval - rest),fahrzeug.cT(currentTime+ interval + interval  - rest), String.valueOf(currentCapacity),"","","","","NONE"});
          
         }
     }
