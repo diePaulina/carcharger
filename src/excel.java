@@ -17,8 +17,11 @@ public class excel {
 
         /*set parameters for our function call*/
         double interval = 0.25;
-        start= convertToDouble(list.get(1)[16]);
-        end= convertToDouble(list.get(1)[17] ) + 24;
+        start = 12;
+        end = 36;
+
+       // start= convertToDouble(list.get(1)[16]);
+       // end= convertToDouble(list.get(1)[17] ) + 24;
           System.out.println("Start zeit: " + fahrzeug.cT(start)+ " , End zeit: " + fahrzeug.cT(end));
         for (int i = 1; i < list.size(); i++) {
             String[] row = list.get(i);
